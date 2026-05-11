@@ -1,0 +1,7 @@
+groq
+langchain-nvidia-ai-endpoints
+python-dotenv
+requests
+fastapi
+uvicorn
+pydantic
