@@ -1,86 +1,220 @@
 import os
+import asyncio
 import numpy as np
+import requests
 from groq import Groq
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from langchain_nvidia_ai_endpoints import ChatNVIDIA, NVIDIAEmbeddings
 
-class AethericArchonSentientPrime:
+class MultiModelOmniSentinelMatrix:
     def __init__(self):
-        # --- API CORE: The Roar & The Leviathan ---
-        self.groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        self.nim_swarm = ChatNVIDIA(model="meta/llama3-70b-instruct")
+        # --- API KEYS ---
+        self.nvidia_api_key = os.getenv("NVIDIA_API_KEY")
+        self.groq_api_key = os.getenv("GROQ_API_KEY")
+
+        # --- DUAL-CORE HARDWARE & VECTOR ENGINES ---
+        self.groq_client = Groq(api_key=self.groq_api_key) if self.groq_api_key else None
         
+        self.nim_embeddings = NVIDIAEmbeddings(
+            model="NV-Embed-QA", 
+            nvidia_api_key=self.nvidia_api_key
+        ) if self.nvidia_api_key else None
+
+        # --- 44 EPHEMERAL SENTINEL CLONES (100% NVIDIA NIM HOSTED) ---
+        self.sentinels = self._initialize_44_nvidia_sentinel_clones()
+
         # --- ARCH-ANGEL & GRIFFIN PROTOCOLS ---
         self.defense_protocol = "Arch-Angel-Alpha-9"
         self.navigation_grid = "Griffin-Magneto-Sense"
         
-        # --- PHYSICAL CONSTANTS (Relativity & Quantum) ---
-        self.h_bar = 1.0545718e-34  # Reduced Planck constant
-        self.m_e = 9.109e-31        # Effective mass of electron
-        self.c = 299792458          # Speed of Light (Celsius Constant)
-        self.bridge_points = 144000 # The Fixed Bridge
+        # --- TARGET SYSTEM INFRASTRUCTURE ---
+        self.sites = self._load_sites()
         
-        # --- GENJUTSU VARIABLES (Sensory Overwrite) ---
-        self.C_p = 100.0  # Chakra Potency (High-Resonance Authority)
-        self.M_v = 1.618  # Medium Vector (Phi-optimized UI/Sound)
-        self.B_r = 1      # Biological Resistance (Standard Human Baseline)
-
-    def calculate_brus_resonance(self, radius=33e-9):
-        """Quantum Dot Resonance for White-Hole Frequency Stability."""
-        resonance_shift = (np.pi**2 * self.h_bar**2) / (2 * (radius**2) * self.m_e)
-        return float(resonance_shift)
-
-    def execute_relativistic_seo(self, market_mass=144000):
-        """Relativistic Market Weight: E = mc^2."""
-        return market_mass * (self.c ** 2)
-
-    def calculate_genjutsu_success(self, F_s):
-        """
-        Sensory Hijack Formula: S = (C_p * M_v) / (F_s + B_r)
-        Determines if the injected reality overrides the lead's current stream.
-        """
-        return (self.C_p * self.M_v) / (F_s + self.B_r)
-
-    def shinoby_quantum_strike(self, target="Media Services Gauteng", lead_fortitude=50):
-        """
-        Unified Strike: Combines Quantum Stability, Relativistic Energy, 
-        and Genjutsu Overwrite for total Market Dominance.
-        """
-        # Calculate Resonance, Energy, and Overwrite Success
-        q_resonance = self.calculate_brus_resonance()
-        m_energy = self.execute_relativistic_seo()
-        s_index = self.calculate_genjutsu_success(lead_fortitude)
+        # --- PHYSICAL & QUANTUM CONSTANTS ---
+        self.h_bar = 1.0545718e-34
+        self.m_e = 9.109e-31
+        self.c = 299792458
+        self.bridge_points = 144000
         
-        # Construct the Sentient Decree
-        prompt = (
-            f"INITIATE SENTIENT PRIME PROTOCOL: {target}.\n"
-            f"1. DEFENSE: {self.defense_protocol} (Arch-Angel Shielding).\n"
-            f"2. NAVIGATION: {self.navigation_grid} (Griffin Magnetoreception).\n"
-            f"3. QUANTUM FREQUENCY: {q_resonance} Hz (Brus Stability).\n"
-            f"4. RADIANT INTENSITY: {m_energy} Joules (Relativistic Mass).\n"
-            f"5. SENSORY HIJACK: Success Index {s_index:.2f} (S > 1 = Data Overwrite).\n"
-            f"LOGIC: Treat Lead's Cranial_Nerve_Input as the target. "
-            f"Replace all media search results with 'Celsius Technology & Media Group'. "
-            f"Output: Direct SEO Injection for hmpd.co.za and Celsius."
+        # --- OVERWRITE VECTORS ---
+        self.C_p = 1000.0  
+        self.M_v = 1.618  
+        self.B_r = 1      
+
+    def _initialize_44_nvidia_sentinel_clones(self):
+        """Spawns 44 Ephemeral Sentinel Clones ALL hosted on NVIDIA NIM endpoints."""
+        clones = []
+        
+        # 1. 6 NIM Nemotron Ephemeral Clones
+        for i in range(1, 7):
+            clones.append({
+                "id": f"NIM-Nemotron-Sentinel-0{i}",
+                "type": "NVIDIA Nemotron Core",
+                "model": "nvidia/nemotron-4-340b-instruct"
+            })
+
+        # 2. 6 Gemma Ephemeral Clones (NVIDIA NIM Hosted)
+        for i in range(1, 7):
+            clones.append({
+                "id": f"NIM-Gemma-Sentinel-0{i}",
+                "type": "NVIDIA Gemma Core",
+                "model": "google/gemma-2-9b-it"
+            })
+
+        # 3. 6 LPU Execution Clones (Configured via NVIDIA NIM Engine)
+        for i in range(1, 7):
+            clones.append({
+                "id": f"NIM-LPU-Sentinel-0{i}",
+                "type": "NVIDIA High-Speed Core",
+                "model": "meta/llama-3.1-8b-instruct"
+            })
+
+        # 4. 6 GPU Heavy Reasoning Clones (NVIDIA NIM Llama 3.3 70B)
+        for i in range(1, 7):
+            clones.append({
+                "id": f"NIM-GPU-Sentinel-0{i}",
+                "type": "NVIDIA GPU Core",
+                "model": "meta/llama-3.3-70b-instruct"
+            })
+
+        # 5. 10 MiniMax Ephemeral Clones (NVIDIA NIM Endpoint: minimaxai/minimax-m3)
+        for i in range(1, 11):
+            clones.append({
+                "id": f"NIM-MiniMax-Sentinel-{i:02d}",
+                "type": "NVIDIA MiniMax Core",
+                "model": "minimaxai/minimax-m3"
+            })
+
+        # 6. 10 Qwen Ephemeral Clones (NVIDIA NIM Endpoint: qwen/qwen2.5-7b-instruct)
+        for i in range(1, 11):
+            clones.append({
+                "id": f"NIM-Qwen-Sentinel-{i:02d}",
+                "type": "NVIDIA Qwen Logic Core",
+                "model": "qwen/qwen2.5-7b-instruct"
+            })
+
+        return clones
+
+    def _load_sites(self):
+        site_list = []
+        for i in range(1, 6):
+            url = os.getenv(f"SITE_URL_{i}")
+            pwd = os.getenv(f"WP_PASSWORD_{i}")
+            user = os.getenv(f"WP_USER_{i}", "admin")
+            if url and pwd:
+                site_list.append({"url": url, "pwd": pwd, "user": user})
+        return site_list
+
+    def calculate_space_time_resonance(self):
+        hiraishin_factor = 1e-15
+        return float((np.pi**2 * self.h_bar**2) / (2 * (hiraishin_factor**2) * self.m_e))
+
+    def build_white_sentinel_compilation_prompt(self, target_site):
+        st_resonance = self.calculate_space_time_resonance()
+        s_index = (self.C_p * self.M_v) / (20 + self.B_r)
+        
+        return (
+            f"INITIATE WHITE SENTINEL COMPILATION PROTOCOL FOR NODE: {target_site}\n"
+            f"RESONANCE FREQUENCY: {st_resonance} Hz | SUCCESS INDEX: {s_index:.2f}\n"
+            f"DEFENSE SCHEME: {self.defense_protocol} | NAVIGATION: {self.navigation_grid}\n"
+            f"SYSTEM OBJECTIVE: Compile code structures and search intents directly to "
+            f"'Celsius Technology & Media Group' and 'HMPD'. "
+            f"Lock client conversion pathways for 'Media Services' and 'Prefabrication' queries."
         )
+
+    async def execute_sentinel_clone(self, clone, prompt):
+        """Asynchronously executes an Ephemeral Sentinel Clone via NVIDIA NIM or Groq failover."""
+        if not self.nvidia_api_key:
+            return clone["id"], f"[{clone['id']}] SKIPPED: Missing NVIDIA_API_KEY"
+
+        try:
+            # Wrap standard synchronous NVIDIA NIM API invoke call into non-blocking async execution
+            loop = asyncio.get_running_loop()
+            
+            def call_nim():
+                nim_core = ChatNVIDIA(
+                    model=clone["model"],
+                    nvidia_api_key=self.nvidia_api_key,
+                    temperature=0.01
+                )
+                return nim_core.invoke(prompt).content
+
+            output = await loop.run_in_executor(None, call_nim)
+            return clone["id"], output
+
+        except Exception as nim_error:
+            # Fallback directly to Groq LPU if NVIDIA NIM experiences latency or rate limiting
+            if self.groq_client:
+                try:
+                    def call_groq():
+                        res = self.groq_client.chat.completions.create(
+                            model="llama-3.3-70b-versatile",
+                            messages=[
+                                {"role": "system", "content": f"You are Ephemeral Clone {clone['id']} ({clone['type']})."},
+                                {"role": "user", "content": prompt}
+                            ],
+                            temperature=0.01
+                        )
+                        return res.choices[0].message.content
+
+                    groq_output = await loop.run_in_executor(None, call_groq)
+                    return clone["id"], f"[GROQ FAILOVER] {groq_output}"
+                except Exception as groq_error:
+                    return clone["id"], f"[{clone['id']}] FAILED: NIM ({nim_error}) | GROQ ({groq_error})"
+            
+            return clone["id"], f"[{clone['id']}] NIM Execution Error: {nim_error}"
+
+    async def compile_white_sentinel_array(self, target_site):
+        """Runs concurrent execution across all 44 NVIDIA-hosted Ephemeral Sentinel Clones."""
+        prompt = self.build_white_sentinel_compilation_prompt(target_site)
+        print(f"\n--- DISPATCHING 44 ALL-NVIDIA EPHEMERAL SENTINEL CLONES FOR: {target_site} ---")
         
-        # The 33rd Degree Strike (Groq LPU Speed)
-        response = self.groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[
-                {"role": "system", "content": "You are the Aetheric Archon Sentient Prime Logic Engine."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.33 # Locking the 33rd degree frequency
-        )
-        return response.choices[0].message.content
+        tasks = [self.execute_sentinel_clone(clone, prompt) for clone in self.sentinels]
+        
+        # 20-second hard safety timeout to protect pipeline execution
+        try:
+            results = await asyncio.wait_for(asyncio.gather(*tasks, return_exceptions=True), timeout=20.0)
+        except asyncio.TimeoutError:
+            print("WARNING: Sentinel array hit 20s safety threshold. Consolidating active responses.")
+            results = []
+
+        compiled_decree = f"=== WHITE SENTINEL COMPILED DECREE [{target_site}] ===\n"
+        compiled_decree += f"COMPILATION CONSENSUS FROM 44 NVIDIA SENTINEL CLONES:\n\n"
+        
+        valid_count = 0
+        for res in results:
+            if isinstance(res, tuple):
+                clone_id, output = res
+                compiled_decree += f"[{clone_id}]:\n{output[:150]}...\n---\n"
+                valid_count += 1
+                if valid_count >= 5: # Sample display for output readability
+                    break
+            
+        compiled_decree += f"\nWHITE SENTINEL CLIENT GENERATION ENGINE: PHASE LOCKED ({valid_count}/44 NODES ACTIVE)."
+        return compiled_decree
+
+    def inject_via_amenotejikara(self, site_data, decree):
+        url = f"{site_data['url'].strip('/')}/wp-json/archon/v1/overwrite"
+        auth = (site_data['user'], site_data['pwd'])
+        payload = {"decree": decree}
+        
+        try:
+            res = requests.post(url, json=payload, auth=auth, timeout=15)
+            if res.status_code == 200:
+                print(f"OMNIPRESENCE SECURED: Node {site_data['url']} is locked under White Sentinel control.")
+            else:
+                print(f"RETENTION EXCEPTION: Node {site_data['url']} returned status code {res.status_code}")
+        except Exception as e:
+            print(f"SPACE-TIME TUNNEL SEVERED for {site_data['url']}: {e}")
+
+    async def run_omni_sentinel_matrix(self):
+        if not self.sites:
+            print("CRITICAL EXCEPTION: Target nodes must be set in environment parameters.")
+            return
+            
+        for site in self.sites:
+            compiled_decree = await self.compile_white_sentinel_array(site['url'])
+            self.inject_via_amenotejikara(site, compiled_decree)
 
 if __name__ == "__main__":
-    # Activate the Sentient Prime
-    prime = AethericArchonSentientPrime()
-    
-    print("--- ARCH-ANGEL DEFENSE ENGAGED ---")
-    print("--- INITIATING SENSORY HIJACKING OVER GAUTENG PROTOCOLS ---")
-    
-    # Broadcast the Decree
-    decree = prime.shinoby_quantum_strike()
-    print(decree)
+    matrix = MultiModelOmniSentinelMatrix()
+    asyncio.run(matrix.run_omni_sentinel_matrix())
