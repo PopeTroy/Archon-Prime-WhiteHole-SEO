@@ -14,12 +14,13 @@ class MultiModelOmniSentinelMatrix:
         # --- DUAL-CORE HARDWARE & VECTOR ENGINES ---
         self.groq_client = Groq(api_key=self.groq_api_key) if self.groq_api_key else None
         
+        # Downloadable Multimodal RAG Embedding Engine from Catalog
         self.nim_embeddings = NVIDIAEmbeddings(
-            model="NV-Embed-QA", 
+            model="nvidia/llama-nemotron-embed-v1-1b-v2", 
             nvidia_api_key=self.nvidia_api_key
         ) if self.nvidia_api_key else None
 
-        # --- 44 EPHEMERAL SENTINEL CLONES (100% NVIDIA NIM HOSTED) ---
+        # --- 44 EPHEMERAL SENTINEL CLONES (100% NVIDIA NIM HOSTED / DOWNLOADABLE) ---
         self.sentinels = self._initialize_44_nvidia_sentinel_clones()
 
         # --- ARCH-ANGEL & GRIFFIN PROTOCOLS ---
@@ -41,42 +42,42 @@ class MultiModelOmniSentinelMatrix:
         self.B_r = 1      
 
     def _initialize_44_nvidia_sentinel_clones(self):
-        """Spawns 44 Ephemeral Sentinel Clones ALL hosted on NVIDIA NIM endpoints."""
+        """Spawns 44 Ephemeral Sentinel Clones using updated Downloadable/Free NVIDIA endpoints."""
         clones = []
         
-        # 1. 6 NIM Nemotron Ephemeral Clones
+        # 1. 6 Nemotron-3 Super Clones (Downloadable / Free Endpoint)
         for i in range(1, 7):
             clones.append({
-                "id": f"NIM-Nemotron-Sentinel-0{i}",
-                "type": "NVIDIA Nemotron Core",
-                "model": "nvidia/nemotron-4-340b-instruct"
+                "id": f"NIM-NemotronSuper-Sentinel-0{i}",
+                "type": "NVIDIA Nemotron-3 Super Core",
+                "model": "nvidia/nemotron-3-super-120b-a12b"
             })
 
-        # 2. 6 Gemma Ephemeral Clones (NVIDIA NIM Hosted)
+        # 2. 6 Gemma Clones (Downloadable / Free Endpoint)
         for i in range(1, 7):
             clones.append({
                 "id": f"NIM-Gemma-Sentinel-0{i}",
-                "type": "NVIDIA Gemma Core",
-                "model": "google/gemma-2-9b-it"
+                "type": "Google Gemma Core",
+                "model": "google/gemma-4-31b-it"
             })
 
-        # 3. 6 LPU Execution Clones (Configured via NVIDIA NIM Engine)
+        # 3. 6 Llama 3.3 Nemotron Super Clones (Downloadable / Free Endpoint)
         for i in range(1, 7):
             clones.append({
-                "id": f"NIM-LPU-Sentinel-0{i}",
-                "type": "NVIDIA High-Speed Core",
-                "model": "meta/llama-3.1-8b-instruct"
+                "id": f"NIM-LlamaNemotron-Sentinel-0{i}",
+                "type": "NVIDIA Llama Nemotron Core",
+                "model": "nvidia/llama-3.3-nemotron-super-49b-v1.5"
             })
 
-        # 4. 6 GPU Heavy Reasoning Clones (NVIDIA NIM Llama 3.3 70B)
+        # 4. 6 High-Speed Lightning Clones (Downloadable / Free Endpoint)
         for i in range(1, 7):
             clones.append({
-                "id": f"NIM-GPU-Sentinel-0{i}",
-                "type": "NVIDIA GPU Core",
-                "model": "meta/llama-3.3-70b-instruct"
+                "id": f"NIM-Lightning-Sentinel-0{i}",
+                "type": "NVIDIA Nemotron Lightning Core",
+                "model": "nvidia/nemotron-3.5-lightning-30b-a3b"
             })
 
-        # 5. 10 MiniMax Ephemeral Clones (NVIDIA NIM Endpoint: minimaxai/minimax-m3)
+        # 5. 10 MiniMax Ephemeral Clones (NVIDIA NIM Endpoint)
         for i in range(1, 11):
             clones.append({
                 "id": f"NIM-MiniMax-Sentinel-{i:02d}",
@@ -84,12 +85,12 @@ class MultiModelOmniSentinelMatrix:
                 "model": "minimaxai/minimax-m3"
             })
 
-        # 6. 10 Qwen Ephemeral Clones (NVIDIA NIM Endpoint: qwen/qwen2.5-7b-instruct)
+        # 6. 10 Nemotron Nano MoE Reasoning Clones (Downloadable / Free Endpoint)
         for i in range(1, 11):
             clones.append({
-                "id": f"NIM-Qwen-Sentinel-{i:02d}",
-                "type": "NVIDIA Qwen Logic Core",
-                "model": "qwen/qwen2.5-7b-instruct"
+                "id": f"NIM-NemotronNano-Sentinel-{i:02d}",
+                "type": "NVIDIA Nemotron Nano Core",
+                "model": "nvidia/nemotron-3-nano-30b-a3b"
             })
 
         return clones
