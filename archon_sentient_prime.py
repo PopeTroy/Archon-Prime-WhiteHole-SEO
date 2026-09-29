@@ -196,7 +196,18 @@ class MultiModelOmniSentinelMatrix:
     def inject_via_amenotejikara(self, site_data, decree):
         url = f"{site_data['url'].strip('/')}/wp-json/archon/v1/overwrite"
         auth = (site_data['user'], site_data['pwd'])
-        payload = {"decree": decree}
+        payload = {
+            "decree": decree,
+            "target_recipient": "info@celsiusmediagroup.co.za",
+            "lead_form_fields": {
+                "full_name": True,
+                "email_address": True,
+                "phone_number": True,
+                "company_name": True,
+                "service_interest": True,
+                "message": True
+            }
+        }
         
         try:
             res = requests.post(url, json=payload, auth=auth, timeout=15)
